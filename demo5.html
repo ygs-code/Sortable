@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+     <link href="app.css" rel="stylesheet" type="text/css"/> 
+    <script src="./Sortable.js"></script>
+     
+ <body>
+      <ul id="foo" class="block__list block__list_words">
+                <li drag-id="1">1</li>
+                <li drag-id="2">2</li>
+                <li drag-id="3">3</li>
+                <li drag-id="4">4</li>
+                <li drag-id="5">5</li>
+                <li drag-id="6">6</li>
+                <li drag-id="7">7</li>
+                <li drag-id="8">8</li>
+            </ul>
+       <script>
+                 Sortable.create(document.getElementById('foo'), {
+                                animation: 150, //动画参数
+                                onAdd: function (evt){   //拖拽时候添加有新的节点的时候发生该事件
+                                     console.log('onAdd.foo:', [evt.item, evt.from]); 
+                                },
+                                onUpdate: function (evt){  //拖拽更新节点位置发生该事件
+                                    console.log('onUpdate.foo:', [evt.item, evt.from]);  
+                                },
+                                onRemove: function (evt){   //删除拖拽节点的时候促发该事件
+                                     console.log('onRemove.foo:', [evt.item, evt.from]); 
+                                },
+                                onStart:function(evt){  //开始拖拽出发该函数
+                                     console.log('onStart.foo:', [evt.item, evt.from]);
+                                },
+                                onSort:function(evt){  //发生排序发生该事件
+                                     console.log('onSort.foo:', [evt.item, evt.from]);
+                                },
+                                onEnd: function(evt){ //拖拽完毕之后发生该事件
+                                     console.log('onEnd.foo:', [evt.item, evt.from]); 
+                                     var id_arr=''
+                                     for(var i=0, len=evt.from.children.length; i<len; i++){
+                                            id_arr+=','+ evt.from.children[i].getAttribute('drag-id');
+                                         }
+                                         id_arr=id_arr.substr(1);
+                                         //然后请求后台ajax 这样就完成了拖拽排序
+                                        console.log(id_arr);
+                                }
+                     });
+      </script>  
+</body>
+</html>
